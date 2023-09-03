@@ -18,8 +18,8 @@ const login = async (req, res) => {
     if(!user){
         throw new UnauthenticatedError('Invalid Credintials!');
     }
-    const isEqual = await bcrypt.compare(password,user.password);
-    if(!isEqual){
+    const isPasswordCorrect = await user.comparePasswords(password);
+    if(!isPasswordCorrect){
         throw new UnauthenticatedError('Invalid Credintials!');
     }
     

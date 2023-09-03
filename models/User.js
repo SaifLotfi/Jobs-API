@@ -31,6 +31,10 @@ UserSchema.methods.createJwt = function () {
     });
     return token;
 };
+UserSchema.methods.comparePasswords = async function (candidatePassword) {
+    const isEqual = await bcrypt.compare(candidatePassword,this.password);
+    return isEqual;
+};
 UserSchema.pre('save', async function () {
     const salt = bcrypt.genSaltSync(10);
     this.password = bcrypt.hashSync(this.password, salt);
