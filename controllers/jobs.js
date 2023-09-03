@@ -1,3 +1,6 @@
+import { StatusCodes } from "http-status-codes";
+import Job from "../models/Job.js";
+
 const getAllJobs = async (req, res) => {
     res.send('get all jobs');
 };
@@ -7,7 +10,12 @@ const getJob = async (req, res) => {
 };
 
 const createJob = async (req, res) => {
-    res.send('create job');
+    req.body.createdBy = req.user.userId;
+    const job = new Job(req.body);
+    
+    await job.save();
+    
+    res.status(StatusCodes.CREATED).json({job});
 };
 
 const updateJob = async (req, res) => {
