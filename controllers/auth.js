@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
+import {BadRequestError,UnauthenticatedError} from '../errors/index.js';
+import  bcrypt  from 'bcryptjs';
 
 const register = async (req, res) => {
     const user = await User.create({ ...req.body });
@@ -9,7 +10,20 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    res.send('login user');
+    const {email,password} = req.body;
+    if(!email||!password){
+        throw new BadRequestError('Please Provide email and password!');
+    }
+    const user = await User.findOne({email});
+    if(!user){
+        throw new UnauthenticatedError('Invalid Credintials!');
+    }
+    const isEqual = await bcrypt.compare(password,user.password);
+    if(!isEqual){
+        throw new UnauthenticatedError('Invalid Credintials!');
+    }
+    
+    res.status(StatusCodes.OK).json({ user: { name: user.name }, token:user.createJwt() });
 };
 
 export { register, login };
