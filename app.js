@@ -27,7 +27,7 @@ app.use(rateLimiter({
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
-app.use(xxs());
+app.use(xss());
 
 // extra packages
 
