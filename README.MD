@@ -1,7 +1,7 @@
 
 ## Jobs-API - Overview
 
-Jobs-API is a powerful RESTful API designed to help you manage job listings effortlessly. Whether you're building a job board, a career website, or any application that requires job posting functionality, Jobs-API has you covered. It offers a wide range of features to create, retrieve, update, and delete job listings, all while providing a seamless experience for both users and developers.
+This is my Implementation for the Jobs Api Project of [John Smilga Course](https://youtu.be/qwfE7fSVaZM?si=ZYvOV3K7iQx0Cd6v) 
 
 ## Table of Contents
 
