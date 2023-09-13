@@ -1,69 +1,99 @@
-#### Setup
+
+## Jobs-API - Overview
+
+Jobs-API is a powerful RESTful API designed to help you manage job listings effortlessly. Whether you're building a job board, a career website, or any application that requires job posting functionality, Jobs-API has you covered. It offers a wide range of features to create, retrieve, update, and delete job listings, all while providing a seamless experience for both users and developers.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Running the Server](#running-the-server)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+
+### Prerequisites
+
+Before you can set up and use Jobs-API, ensure you have the following prerequisites installed:
+
+- Node.js and npm: Download and install from [nodejs.org](https://nodejs.org/).
+- MongoDB: Install MongoDB and ensure it's running. You can download it from [mongodb.com](https://www.mongodb.com/).
+
+### Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/SaifLotfi/Jobs-API.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd Jobs-API
+   ```
+
+3. Install the project dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Configuration
+
+1. Create a `.env` file in the project root:
+
+   ```bash
+   touch .env
+   ```
+
+2. Configure the `.env` file with your environment-specific settings. You can use the provided `.env.example` as a template.
+
+### Running the Server
+
+To start the API server, use the following command:
 
 ```bash
-npm install && npm start
+npm start
 ```
 
-#### Database Connection
+The API will be accessible locally at `http://localhost:3000`.
 
-1. Import connect.js
-2. Invoke in start()
-3. Setup .env in the root
-4. Add MONGO_URI with correct value
+## Usage
 
-#### Routers
+### Authentication
 
-- auth.js
-- jobs.js
+Jobs-API uses token-based authentication. To access protected endpoints, users need to obtain an authentication token. Here's how it works:
 
-#### User Model
+- **Sign Up**: Users can create a new account by sending a `POST` request to `/api/auth/signup`.
 
-Email Validation Regex
+- **Log In**: After signing up, users can log in by sending a `POST` request to `/api/auth/login`. They will receive an authentication token in response.
 
-```regex
-/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-```
+- **Authorization**: To access protected endpoints, include the obtained token in the `Authorization` header of your requests.
 
-#### Register User
+### API Endpoints
 
-- Validate - name, email, password - with Mongoose
-- Hash Password (with bcryptjs)
-- Save User
-- Generate Token
-- Send Response with Token
+Jobs-API provides a variety of endpoints to manage job listings. Some of the main API endpoints include:
 
-#### Login User
+- `GET /api/jobs`: Retrieve a list of job listings.
+- `GET /api/jobs/:id`: Retrieve a specific job listing by ID.
+- `POST /api/jobs`: Create a new job listing (requires authentication).
+- `PUT /api/jobs/:id`: Update a job listing (requires authentication).
+- `DELETE /api/jobs/:id`: Delete a job listing (requires authentication).
 
-- Validate - email, password - in controller
-- If email or password is missing, throw BadRequestError
-- Find User
-- Compare Passwords
-- If no user or password does not match, throw UnauthenticatedError
-- If correct, generate Token
-- Send Response with Token
+For a complete list of available endpoints and their usage, please refer to the API documentation or the code.
 
-#### Mongoose Errors
+## Contributing
 
-- Validation Errors
-- Duplicate (Email)
-- Cast Error
+Contributions to this project are highly encouraged and appreciated. If you'd like to contribute, please follow these steps:
 
-#### Security
-
-- helmet
-- cors
-- xss-clean
-- express-rate-limit
-
-Swagger UI
-
-```yaml
-/jobs/{id}:
-  parameters:
-    - in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: the job id
-```
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and ensure they are well-tested.
+4. Submit a pull request with a clear description of your changes.
