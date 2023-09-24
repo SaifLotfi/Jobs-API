@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { SchemaType } from 'mongoose';
 const TokenSchema = mongoose.Schema({
     userId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         required: true,
         ref: 'User',
     },
