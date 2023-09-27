@@ -10,6 +10,22 @@ import crypto from 'crypto';
 import Token from '../models/Token.js';
 import sendEmail from '../util/sendEmail.js';
 
+const generateResetPWToken = async(userId)=>{
+    console.log('ahpe');
+    let token = await Token.findOne({ userId});
+    if (token) {
+        await token.remove();
+    }
+    token = crypto.randomBytes(32).toString('hex');
+    const hashedToken = await bcrypt.hash(token, 12);
+    const resetPassowrdToken = new Token({
+        userId,
+        token:hashedToken,
+    });
+    await resetPassowrdToken.save();
+    return token;
+}
+
 const register = async (req, res) => {
     const user = await User.create({ ...req.body });
 
@@ -48,18 +64,7 @@ const requestResetPassword = async (req, res) => {
     if (!user) {
         throw new NotFoundError('User not found!');
     }
-    let token = Token.findOne({ userId: user._id });
-    if (token) {
-        await token.deleteOne();
-    }
-    token = crypto.randomBytes(32).toString('hex');
-    const hashedToken = await bcrypt.hash(token, 12);
-    const resetPassowrdToken = new Token({
-        userId: user._id,
-        token:hashedToken,
-    });
-    await resetPassowrdToken.save();
-    const emailText = ``;
+    const token = await generateResetPWToken(user._id);
     sendEmail(
         email,
         'Password Reset Request',
@@ -91,4 +96,4 @@ const resetPassword = async (req, res) => {
 }
 
 
-export { register, login, requestResetPassword,resetPassword };
+export { register, login, requestResetPassword,resetPassword,generateResetPWToken };
