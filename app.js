@@ -4,7 +4,7 @@ import express from 'express';
 const app = express();
 
 //connect DB
-import connectDB from './db/connect.js';
+import './config/config.js';
 //routers
 import authRouter from './routes/auth.js';
 import jobsRouter from './routes/jobs.js';
@@ -40,24 +40,20 @@ app.use(xss());
 // routes
 app.get('/', (req, res, next) => {
     res.send('<h1>Jobs API</h1> <a href="/api-docs">Documentation</a>');
-
 });
 
-app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocument));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', isAuth, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+let server;
+server = app.listen(process.env.PORT, () =>
+    console.log(
+        `Server is running on  http://${process.env.HOST}:${process.env.PORT} ...`
+    )
+);
 
-const port = process.env.PORT || 3000;
-const host = 'localhost';
-try {
-    await connectDB(process.env.MONGO_URI);
-    app.listen(port, () =>
-        console.log(`Server is running on  http://${host}:${port} ...`)
-    );
-} catch (error) {
-    console.log(error);
-}
+export default server;

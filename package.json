@@ -4,7 +4,7 @@
   "description": "```bash npm install && npm start ```",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "NODE_ENV=testing jest",
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
@@ -31,8 +31,13 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
+    "import-local": "^3.1.0",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.1"
+    "jest-cli": "^29.7.0",
+    "mockingoose": "^2.16.2",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   },
+  
   "type": "module"
 }

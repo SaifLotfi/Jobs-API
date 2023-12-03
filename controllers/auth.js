@@ -11,10 +11,9 @@ import Token from '../models/Token.js';
 import sendEmail from '../util/sendEmail.js';
 
 const generateResetPWToken = async(userId)=>{
-    console.log('ahpe');
     let token = await Token.findOne({ userId});
     if (token) {
-        await token.remove();
+        await Token.deleteOne({_id:token._id});
     }
     token = crypto.randomBytes(32).toString('hex');
     const hashedToken = await bcrypt.hash(token, 12);
