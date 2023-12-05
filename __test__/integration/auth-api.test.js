@@ -4,8 +4,6 @@ import server from '../../app.js';
 import mongoose from '../../config/config.js';
 import Token from '../../models/Token.js';
 import { generateResetPWToken } from '../../controllers/auth.js';
-jest.setTimeout(40000);
-
 beforeEach(async () => {
     await Token.deleteMany();
     await User.deleteMany();
